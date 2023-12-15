@@ -1,17 +1,17 @@
-// Class Package Name
+// Package Name
 package frc.robot;
 
-// Importing Vendor Deps
+// Importing Vendor Libraries
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode; // Required for configuring the Victor SPX Motor Controller modes which are used in the tank drive system.
 import com.ctre.phoenix.motorcontrol.can.VictorSPX; // Required for using the Victor SPX Motor Controller in CAN mode.
 import com.revrobotics.CANSparkMax; // Required for using the REV SparkMAX Motor Controller which controls the elevator and arm (if there was one attached).
 import com.revrobotics.CANSparkMaxLowLevel.MotorType; // Required for setting the REV SparkMAX Motor Controller motor type between brushed and brushless.
 
-// Importing Required Built In Libraries
-import edu.wpi.first.cameraserver.CameraServer; // Used to initiate a link between the camera on the robot and the computer over wifi or ethernet.
-import edu.wpi.first.wpilibj.GenericHID; // Used for adding Genaric HID devices like misc USB Devices on the robot and computer.
-import edu.wpi.first.wpilibj.Joystick; // Used for adding any joysticks compatable with the FRC Software like the Logitech Xtreme 3D Pro. Also reqires GenericHID Library.
-import edu.wpi.first.wpilibj.PS4Controller; // Used for adding any PS4 stle controller compatable with the FRC Software like the Logitech C310 or a PS4/5 Controller. Also reqires GenericHID Library. There is also a similar lib for XBOX controllers.
+// Importing FIRST/WPI Libraries
+import edu.wpi.first.cameraserver.CameraServer; // Used to start a camera server that is hosted on the robots network.
+import edu.wpi.first.wpilibj.GenericHID; // Used for adding Genaric HID devices like USB Devices to the robot and computer.
+import edu.wpi.first.wpilibj.Joystick; // Used for adding any joysticks compatable with the FRC Software like the Logitech Xtreme 3D Pro.
+import edu.wpi.first.wpilibj.PS4Controller; // Used for adding any PS4 stle controller compatable with the FRC Software like the Logitech F310 or a PS4 Controller. There is also a similar library for XBOX controllers.
 import edu.wpi.first.wpilibj.Servo; // Used for interfacing PWM Servos with the RoboRIO.
 import edu.wpi.first.wpilibj.TimedRobot; // This is one of the most important libraries this is the libray that creates the class that starts/stops all the code written to the robot when it is enabled/disabled.
 import edu.wpi.first.wpilibj.Timer; // This library is reqired during competions to control if the robot is enabled or disabled and the begining or end of a timer.
@@ -20,25 +20,20 @@ import edu.wpi.first.wpilibj2.command.button.POVButton; // This is an addon libr
 public class Robot extends TimedRobot {
 
   // Assinging Controllers
-
-
   Joystick driverController = new Joystick(0); // Assigns the joystick to port 0 on the computer.
   PS4Controller driverController2 = new PS4Controller(1); // Assigns the PS4 style controller to port 1
   GenericHID functionController = new GenericHID(3); // Assigns Generic HID to port 3
-
   // The computer will find the usb device and assing the port automaticly.
 
   double autoStart = 0; // Autonomous start delay
 
   // Assing POV button directions 
-
   POVButton povUp = new POVButton(driverController2, 0);
   POVButton povDown = new POVButton(driverController2, 90);
   POVButton povLeft = new POVButton(driverController2, 180);
   POVButton povRight = new POVButton(driverController2, 270);
 
   // Assing Motors and Servos
-
   VictorSPX driveRightB = new VictorSPX(1); // Assigns Motor Controller to CAN ID 1 VSPX
   VictorSPX driveRightA = new VictorSPX(2); // Assigns Motor Controller to CAN ID 2 VSPX
   VictorSPX driveLeftB = new VictorSPX(3); // Assigns Motor Controller to CAN ID 3 VSPX
@@ -125,14 +120,12 @@ public class Robot extends TimedRobot {
     double turn = -driverController.getRawAxis(0);
 
     // Setting Drive Motors Up
-
     driveLeftA.set(VictorSPXControlMode.PercentOutput, -(forward+(turn*0.65+(slowturn*-0.55))));
     driveLeftB.set(VictorSPXControlMode.PercentOutput, -(forward+(turn*0.65+(slowturn*-0.55))));
     driveRightA.set(VictorSPXControlMode.PercentOutput, forward-(turn*0.65-(slowturn*0.55)));
     driveRightB.set(VictorSPXControlMode.PercentOutput, forward-(turn*0.65-(slowturn*0.55)));
 
     // Setting Elevator Motors Up
-
     if (povUp.getAsBoolean()) { // On POV Pressed Move Elevator Up.
       elevatorA.set(0.2);
       elevatorB.set(-0.2);
@@ -145,7 +138,6 @@ public class Robot extends TimedRobot {
     }
 
     // Setting Slide Motors Up
-  
    if (triangleButton) { // On Triangle Pressed Move Slide Out
       slideA.set(0.2);
       slideB.set(-0.2);
@@ -158,7 +150,6 @@ public class Robot extends TimedRobot {
     }
 
     // Setting Box Servos Up
-
     if (crossButton) { // On Cross Held Open Box Flap
       boxServo.set(1);
     } else { // If no button pressed close flap
