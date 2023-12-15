@@ -166,5 +166,22 @@ public class Robot extends TimedRobot {
     }
     
   }
+
+  // Runs on robot disabled
+  @Override
+  public void disabledInit() {
+    driveLeftA.set(VictorSPXControlMode.Velocity, 0);
+    driveLeftB.set(VictorSPXControlMode.Velocity, 0);
+    driveRightA.set(VictorSPXControlMode.Velocity, 0);
+    driveRightB.set(VictorSPXControlMode.Velocity, 0);
+
+    elevatorA.disable();
+    elevatorB.disable();
+
+    slideA.disable();
+    slideB.disable();
+
+    boxServo.setDisabled();
+  }
   
 }
